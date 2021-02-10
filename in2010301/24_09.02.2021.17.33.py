@@ -36,4 +36,13 @@ dictionary = {
 }
 with open("C:/Users/Учитель/Desktop/Новая папка/Informatics/in2010301/24/24.txt", "r") as data:
     inputStr = data.read()
-print(len(inputStr))
+for idx in range(1, len(inputStr) - 1):
+    if isLetterCorrectById(idx, inputStr):
+        dictionary[inputStr[idx]] += 1
+maxV = 0
+for key, value in dictionary.items():
+    if value > maxV:
+        maxV = value
+        outputKey = key
+print(outputKey, dictionary[outputKey])
+# D 1517
