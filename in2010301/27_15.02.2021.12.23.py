@@ -1,5 +1,5 @@
 # link = 'C:/Users/Учитель/Desktop/Новая папка/Informatics/in2010301/27/'
-link = 'E:/Py_scr/stat_grad/Informatics/in2010301/27/'
+# link = 'E:/Py_scr/stat_grad/Informatics/in2010301/27/'
 fileName = input('Введите A или B: ')
 
 
@@ -66,6 +66,35 @@ def getRange(numsList):  # Принимает на вход пару чисел 
     return -resRange
 
 
+# Принимает на вход список индексов и список пар чисел, ищет среди пар чисел пару с наименьшей разностью, причем число с индексом из списка должно быть чётным, а другое - нечётным
+def getTwinListWithMinRangeAndCurrentIdsNumIsPrimeAndAnotherIsNot(idsList, numsList):
+    resRange = 99999999
+    length = len(idsList)
+    globalId = 0
+    localId = idsList[0]
+    for index in range(0, length):
+        localRange = getRange(numsList[index])
+        if localRange < resRange and isEven(numsList[index][idsList[index]]) and (not isEven(numsList[index][1 - idsList[index]])):
+            resRange = localRange
+            globalId = index
+            localId = idsList[index]
+    return [numsList[globalId], globalId, localId]
+
+
+def getTwinListWithMinRangeAndCurrentIdsNumIsNotPrimeAndAnotherIsPrime(idsList, numsList):
+    resRange = 99999999
+    length = len(idsList)
+    globalId = 0
+    localId = idsList[0]
+    for index in range(0, length):
+        localRange = getRange(numsList[index])
+        if localRange < resRange and (not isEven(numsList[index][idsList[index]])) and isEven(numsList[index][1 - idsList[index]]):
+            resRange = localRange
+            globalId = index
+            localId = idsList[index]
+    return [numsList[globalId], globalId, localId]
+
+
 with open(f'{link}27-{fileName}.txt', 'r') as data:
     firstLine = data.readline()
     localList = []
@@ -92,10 +121,60 @@ for array in localList:
 numsSum = getNumsSumByIds(choosenIdsList, localList)
 
 # print(evenCounter, len(localList) - evenCounter, numsSum)
-# 12 7 121501 A-file
+# 12 7 121501              A-file
+# 2777 2778 36898732       B-file
 
+# A
 # print(getTwinListWithMinRangeOneOfThemIsEvenAnotherIsNot(choosenIdsList, localList))
 # [[7706, 8023], 6, 1] - заменив нечетное число на четное мы минимально потеряем в общей сумме. Заменим...
 # choosenIdsList[6] = 0
 # print(getNumsSumByIds(choosenIdsList, localList))
 # 121184
+
+# B (1)
+# print(getTwinListWithMinRangeAndCurrentIdsNumIsPrimeAndAnotherIsNot(
+#     choosenIdsList, localList))
+# [[3196, 3095], 3699, 0] заменим...
+# choosenIdsList[3699] = 1
+# print(getNumsSumByIds(choosenIdsList, localList))
+# 36898631 - по итогу: нечетных чисел больше и сумма - нечетная, разность равна:
+# print(3196 - 3095)
+# 101
+
+# B (2) - теоретическое решение
+# Можно совершить две замены: нечетное => четное (сумма - нечетная, чётных больше); нечётное => четное (сумма - четная, чётных больше)
+# Но в таком случае мы скорее всего сильнее потеряем в сумме
+
+# B (2) - практическое решение
+# 1 шаг:
+# print(getTwinListWithMinRangeAndCurrentIdsNumIsNotPrimeAndAnotherIsPrime(
+#     choosenIdsList, localList))
+# [[6104, 6131], 5138, 1] - найдем разность:
+# print(6131 - 6104)
+# 27
+# 2 шаг:
+# Удалим из списков полученные данные, чтоб не получить их снова
+# choosenIdsList.pop(5138)
+# localList.pop(5138)
+# Повторим певый шаг:
+# print(getTwinListWithMinRangeAndCurrentIdsNumIsNotPrimeAndAnotherIsPrime(
+#     choosenIdsList, localList))
+# [[5451, 5404], 5170, 0] - найдем разность:
+# print(5451 - 5404)
+# 47
+#
+# print(27 + 47)
+# 74 - мы теряем за два шага
+#
+# 74 < 101 => Второй способ эффективнее
+
+# Выполним замену, найдём сумму:
+# choosenIdsList[5138] = 0
+# choosenIdsList[5170] = 1
+# print(getNumsSumByIds(choosenIdsList, localList))
+# 36898705
+
+# 36898705 > 36898631 => Второй вариант решения имеет большую сумму
+
+
+# 121184*36898705
