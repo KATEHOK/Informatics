@@ -1,4 +1,4 @@
-# link = 'C:/Users/Учитель/Desktop/Новая папка/Informatics/in2010301/27/'
+link = 'C:/Users/Учитель/Desktop/Новая папка/Informatics/in2010301/27/'
 # link = 'E:/Py_scr/stat_grad/Informatics/in2010301/27/'
 fileName = input('Введите A или B: ')
 
@@ -141,40 +141,25 @@ numsSum = getNumsSumByIds(choosenIdsList, localList)
 # print(3196 - 3095)
 # 101
 
-# B (2) - теоретическое решение
-# Можно совершить две замены: нечетное => четное (сумма - нечетная, чётных больше); нечётное => четное (сумма - четная, чётных больше)
-# Но в таком случае мы скорее всего сильнее потеряем в сумме
-
-# B (2) - практическое решение
+# B (2)
 # 1 шаг:
 # print(getTwinListWithMinRangeAndCurrentIdsNumIsNotPrimeAndAnotherIsPrime(
 #     choosenIdsList, localList))
 # [[6104, 6131], 5138, 1] - найдем разность:
 # print(6131 - 6104)
 # 27
+# Заменим нечётное число на чётное => сумма-нечётная, чисел больше чётных
+# choosenIdsList[5138] = 0
 # 2 шаг:
-# Удалим из списков полученные данные, чтоб не получить их снова
-# choosenIdsList.pop(5138)
-# localList.pop(5138)
-# Повторим певый шаг:
 # print(getTwinListWithMinRangeAndCurrentIdsNumIsNotPrimeAndAnotherIsPrime(
 #     choosenIdsList, localList))
-# [[5451, 5404], 5170, 0] - найдем разность:
-# print(5451 - 5404)
-# 47
-#
-# print(27 + 47)
-# 74 - мы теряем за два шага
-#
-# 74 < 101 => Второй способ эффективнее
-
-# Выполним замену, найдём сумму:
-# choosenIdsList[5138] = 0
-# choosenIdsList[5170] = 1
+#     [[5451, 5404], 5171, 0]
+# print(5451 - 5404) # разность - 47
+# Заменим нечётное число на чётное => Сумма - чётная, больше чётных чисел, суммарная разность - 74, меньше, чем 101
+# choosenIdsList[5171] = 1
+# Найдём сумму:
 # print(getNumsSumByIds(choosenIdsList, localList))
-# 36898705
-
-# 36898705 > 36898631 => Второй вариант решения имеет большую сумму
-
-
-# 121184*36898705
+# 36898658
+# print(36898658 > 36898631)
+# True
+# 121184*36898658
