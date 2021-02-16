@@ -1,4 +1,6 @@
-# C:/Users/Учитель/Desktop/Новая папка/Informatics/in2010301/26/26.txt
+link = 'C:/Users/Учитель/Desktop/Новая папка/Informatics/in2010301/26/26.txt'
+
+
 def addLineToCurrentModel(line):
     arr = line.split(' ')
     price = int(arr[0])
@@ -28,11 +30,11 @@ dadaDict = {
     'A': [],
     'B': []
 }
-with open('C:/Users/Учитель/Desktop/Новая папка/Informatics/in2010301/26/26.txt', 'r') as data:
+with open(link, 'r') as data:
     budget = int(data.readline().split(' ')[-1])
     for line in data:
         localArr = addLineToCurrentModel(line)
-# print(dadaDict)
+# print(budget)
 dadaDict = {
     'A': getSortedListByPriceLowHigh(dadaDict['A']),
     'B': getSortedListByPriceLowHigh(dadaDict['B'])
@@ -40,17 +42,3 @@ dadaDict = {
 # print(dadaDict['A'])
 # print('HEY')
 # print(dadaDict['B'])
-globalId = 0
-quantity = 0
-while budget > 0 and globalId < len(dadaDict['A']):
-    while budget > 0 and dadaDict['A'][globalId][-1] > 0:
-        if budget - dadaDict['A'][globalId][0] >= 0:
-            quantity += 1
-            lastNum = dadaDict['A'][globalId][0]
-        budget -= lastNum
-    globalId += 1
-else:
-    if budget < 0:
-        budget += lastNum
-print(budget, quantity)
-# 4 76923
