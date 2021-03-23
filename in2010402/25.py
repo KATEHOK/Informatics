@@ -3,9 +3,9 @@ def isRight(num):
     for x in range(1, num // 2 + 1, 2):
         if num % x == 0:
             counter += 1
-            if counter > 5:
+            if counter > 4:
                 return False
-    if counter == 5:
+    if counter == 4:
         return True
     return False
 
